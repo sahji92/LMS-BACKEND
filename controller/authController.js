@@ -45,6 +45,8 @@ const userLogin = (req, res) => {
           message: "auth Error",
         });
       }
+      req.session.user=user
+      req.session.isAuthorised=true
       return res.json({
         status: 200,
         message: user,
@@ -57,7 +59,24 @@ const userLogin = (req, res) => {
       });
     });
 };
+const getUsers = (req, res) => {
+  Users.find()
+    .then((user) => {
+      return res.json({
+        status: 200,
+        message: user,
+      });
+    })
+    .catch((err) => {
+      return res.json({
+        status: 500,
+        message: "Server Error",
+      });
+    });
+};
+
 module.exports = {
   userRegistration,
   userLogin,
+  getUsers,
 };
