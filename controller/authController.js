@@ -45,8 +45,6 @@ const userLogin = (req, res) => {
           message: "auth Error",
         });
       }
-      req.session.user=user
-      req.session.isAuthorised=true
       return res.json({
         status: 200,
         message: user,
