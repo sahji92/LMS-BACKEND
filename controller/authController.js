@@ -2,7 +2,7 @@ const { emailValidator } = require("../constants/validator");
 const Users = require("../models/users");
 var md5 = require("md5");
 
-const userRegistration = (req, res) => {
+const userRegistration =async (req, res) => {
   try {
     console.log(req.body.email);
     console.log(emailValidator(req.body.email));
@@ -12,9 +12,17 @@ const userRegistration = (req, res) => {
         message: "plz put valid email",
       });
     }
+    const user=await Users.findOne({email:req.body.email})
+    if(user){
+       return res.json({
+        status: 200,
+        message: "Email already exist",
+      })
+    }
+
     req.body.password = md5(req.body.password);
-    const user = new Users(req.body);
-    user.save()
+    const newUser = new Users(req.body);
+    newUser.save()
       .then(result => {
        return res.json({
           status: 201,
