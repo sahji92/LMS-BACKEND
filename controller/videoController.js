@@ -1,6 +1,6 @@
-const Courses=require('../models/courses')
+const Videos=require('../models/videos')
 
-const createCourse=(req,res)=>{
+const createVideo=(req,res)=>{
     // if(req.user.type!=='teacher'){
     //     return res.json({
     //         status:403,
@@ -8,12 +8,12 @@ const createCourse=(req,res)=>{
     //     })
     // }
     // req.body.teacher_id=req.user.id
-    const course=new Courses(req.body);
-    course.save()
+    const video=new Videos(req.body);
+    video.save()
     .then(result=>{
         return res.json({
             status:201,
-            message:"Course created successfully"
+            message:"Video added successfully"
         })
     })
     .catch(err=>{
@@ -41,33 +41,14 @@ const getCourses=(req,res)=>{
         })
     })
 }
-
-const getCourse=(req,res)=>{
-    const course_id=req.params.course_id
-    Courses.findOne({_id:course_id})
-    .then(result=>{
-        return res.status(200).json({
-            status:200,
-            message:"Course fetched successfully",
-            data:result
-        })
-    })
-    .catch(err=>{
-        return res.status(500).json({
-            status:500,
-            message:"Bad request"
-        })
-    })
-}
-
 const updateCourse=(req,res)=>{
     const course_id=req.params.course_id
-    // if(req.user.type!=='teacher'){
-    //     return res.json({
-    //         status:403,
-    //         message:"you are not authorised to create a course"
-    //     })
-    // }
+    if(req.user.type!=='teacher'){
+        return res.json({
+            status:403,
+            message:"you are not authorised to create a course"
+        })
+    }
 Courses.findOneAndUpdate({_id:course_id},req.body)
     .then(result=>{
         return res.status(200).json({
@@ -85,9 +66,5 @@ Courses.findOneAndUpdate({_id:course_id},req.body)
 }
 
 module.exports={
-    createCourse,
-    getCourses,
-    updateCourse,
-    getCourse
-
+    createVideo
 }
