@@ -31,16 +31,18 @@ const initializePassport = (passport) => {
   );
 
   passport.serializeUser((user, done) => {
+    console.log('In serializeUser')
     done(null, user.id);
   });
 
   passport.deserializeUser(async (id, done) => {
-    try {
+    console.log('In deserializeUser')
+    // try {
       const user = await Users.findById(id);
       done(null, user);
-    } catch (err) {
-      done(err, false);
-    }
+    // } catch (err) {
+    //   done(err, false);
+    // }
   });
 };
 const isAuthenticated = (req, res, next) => {

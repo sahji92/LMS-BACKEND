@@ -15,12 +15,15 @@ initializePassport(passport)
 app.use(express.urlencoded({extended:true}))
 app.use(session({
     secret:'keyboard cat',
-    resave:false,
+    resave:true,
     saveUninitialized:true,
     cookie:{secure:false},
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+
+app.use('/files', express.static('uploads'))
+
 app.get('/',(req,res)=>{
     console.log("Hello")
     res.send("Hello world")
