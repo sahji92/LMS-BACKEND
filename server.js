@@ -1,11 +1,10 @@
 const express = require('express')
 const mongoConnection = require('./connection')
 const cors = require('cors')
-const router = require('./routes/routes')
 var session = require('express-session')
 var passport = require('passport')
 const { initializePassport } = require('./passportConfig')
-
+const router=require('./routes/routes')
 require('dotenv').config()
 const app = express()
 mongoConnection(process.env.URI)
