@@ -21,6 +21,10 @@ const videoSchema=new Schema({
         type:String,
         required:true
     },
+    pdf: {
+        type: String,
+        required: false
+    }
 },{timestamps:true})
 const Videos=mongoose.model('Videos',videoSchema)
 module.exports=Videos
