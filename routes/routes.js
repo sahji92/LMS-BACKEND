@@ -1,12 +1,12 @@
 const express = require('express')
-const { userRegistration, userlogin, getUsers, userLogout } = require('../controllers/authController')
 var passport = require('passport')
 const { isAuthenticated } = require('../passportConfig')
-const { createCourse, getCourses, updateCourse, getCourse, getAllCourses } = require('../controllers/courseCountroller')
-const connectEnsureLogin = require('connect-ensure-login');// authorization
-const { createVideo, getVideos } = require('../controllers/videoController')
 const multer = require('multer')
-const { createOrder, getOrders } = require('../controllers/orderController')
+const { userLogin, userRegistration, userLogout, getUsers } = require('../controller/authController');
+const { createCourse, updateCourse, getCourses, getCourse, getAllCourses } = require('../controller/courseController');
+const { createVideo, getVideos } = require('../controller/videoController');
+const { createOrder, getOrders } = require('../controller/orderController');
+
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -24,7 +24,7 @@ const router = express.Router()
 
 router.post('/registerUser',userRegistration)
 
-router.post('/userLogin',passport.authenticate('local'),userlogin)
+router.post('/userLogin',passport.authenticate('local'),userLogin)
 
 router.get('/userLogout',userLogout);
 
@@ -69,6 +69,4 @@ router.post('/videoUploads',upload.fields([{name: 'thumbnail'},{name: 'pdf'}]), 
         }
     })
 })
-
-
 module.exports = router

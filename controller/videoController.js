@@ -1,13 +1,13 @@
 const Videos = require("../models/videos");
 
 const createVideo = (req,res) => {
-    // if(req.user.type !== 'teacher') {
-    //     return res.json({
-    //         status: 403,
-    //         message: "You are not authorized to create a course."
-    //     })
-    // }
-    // req.body.teacher_id = req.user.id
+     if(req.user.type !== 'teacher') {
+         return res.json({
+    status: 403,
+             message: "You are not authorized to create a course."
+         })
+     }
+     req.body.teacher_id = req.user.id
     const video = new Videos(req.body);
         video.save()
         .then(result => {

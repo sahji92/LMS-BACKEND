@@ -38,7 +38,7 @@ const initializePassport = (passport) => {
             const user = await Users.findById(id)
             done(null,user)
         } catch(err) {
-            done(error,false)
+            done(err,false)
         }
     })
 
